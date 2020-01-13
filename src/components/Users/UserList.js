@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
@@ -10,26 +12,20 @@ class UserList extends Component {
 
     this.state = {
       loading: false,
-      users: [],
     };
   }
 
   componentDidMount() {
-    this.setState({ loading: true });
+    if (!this.props.users.length) {
+      this.setState({ loading: true });
+    }
 
     this.unsubscribe = this.props.firebase
       .users()
       .onSnapshot(snapshot => {
-        let users = [];
+        this.props.onSetUsers(snapshot.data());
 
-        snapshot.forEach(doc =>
-          users.push({ ...doc.data(), uid: doc.id }),
-        );
-
-        this.setState({
-          users,
-          loading: false,
-        });
+        this.setState({ loading: false });
       });
   }
 
@@ -38,7 +34,8 @@ class UserList extends Component {
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { users } = this.props;
+    const { loading } = this.state;
 
     return (
       <div>
@@ -57,12 +54,7 @@ class UserList extends Component {
                 <strong>Username:</strong> {user.username}
               </span>
               <span>
-                <Link
-                  to={{
-                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                    state: { user },
-                  }}
-                >
+                <Link to={`${ROUTES.ADMIN}/${user.uid}`}>
                   Details
                 </Link>
               </span>
@@ -74,4 +66,21 @@ class UserList extends Component {
   }
 }
 
-export default withFirebase(UserList);
+const mapStateToProps = state => ({
+  users: Object.keys(state.userState.users || {}).map(key => ({
+    ...state.userState.users[key],
+    uid: key,
+  })),
+});
+
+const mapDispatchToProps = dispatch => ({
+  onSetUsers: users => dispatch({ type: 'USERS_SET', users }),
+});
+
+export default compose(
+  withFirebase,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+)(UserList);

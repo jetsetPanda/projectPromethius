@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { compose } from 'recompose';
 
 import {
-  AuthUserContext,
   withAuthorization,
   withEmailVerification,
 } from '../Session';
@@ -29,17 +29,13 @@ const SIGN_IN_METHODS = [
   },
 ];
 
-const AccountPage = () => (
-  <AuthUserContext.Consumer>
-    {authUser => (
+const AccountPage = ({ authUser }) => (
       <div>
         <h1>Account: {authUser.email}</h1>
         <PasswordForgetForm />
         <PasswordChangeForm />
         <LoginManagement authUser={authUser} />
       </div>
-    )}
-  </AuthUserContext.Consumer>
 );
 
 class LoginManagementBase extends Component {
@@ -223,9 +219,14 @@ class DefaultLoginToggle extends Component {
 
 const LoginManagement = withFirebase(LoginManagementBase);
 
+const mapStateToProps = state => ({
+  authUser: state.sessionState.authUser,
+});
+
 const condition = authUser => !!authUser;
 
 export default compose(
+  connect(mapStateToProps),
   withEmailVerification,
   withAuthorization(condition),
 )(AccountPage);
