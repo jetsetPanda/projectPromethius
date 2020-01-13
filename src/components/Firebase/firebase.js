@@ -103,6 +103,14 @@ class Firebase {
   message = uid => this.db.doc(`messages/${uid}`);
 
   messages = () => this.db.collection('messages');
+
+  // *** Inventory API ***
+
+  inventory = uid => this.db.doc(`inventory/${uid}`);
+
+  inventories = () => this.db.collection('inventory');
+
+
 }
 
 export default Firebase;

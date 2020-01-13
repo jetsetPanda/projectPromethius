@@ -1,3 +1,3 @@
-import Messages from './Messages';
+import BakerEntry from './BakerEntry';
 
-export default Messages;
+export default BakerEntry;
