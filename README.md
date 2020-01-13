@@ -1,3 +1,6 @@
+Project Console: https://console.firebase.google.com/project/jeffrdb-dea9e/overview
+Hosting URL: https://jeffrdb-dea9e.firebaseapp.com
+
 # react-firestore-authentication
 
 [![Build Status](https://travis-ci.org/the-road-to-react-with-firebase/react-firestore-authentication.svg?branch=master)](https://travis-ci.org/the-road-to-react-with-firebase/react-firestore-authentication) [![Slack](https://slack-the-road-to-learn-react.wieruch.com/badge.svg)](https://slack-the-road-to-learn-react.wieruch.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/the-road-to-react-with-firebase/react-firestore-authentication.svg)](https://greenkeeper.io/)
