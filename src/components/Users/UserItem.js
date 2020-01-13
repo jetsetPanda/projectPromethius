@@ -31,12 +31,13 @@ class UserItem extends Component {
   }
 
   componentWillUnmount() {
-    this.unsubscribe && this.unsubscribe();
+    this.unsubscribe && this.unsubscribe(this.props.match.params.id);
   }
 
   onSendPasswordResetEmail = () => {
     this.props.firebase.doPasswordReset(this.props.user.email);
   };
+  state;
 
   render() {
     const { user } = this.props;
