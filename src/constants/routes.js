@@ -6,3 +6,5 @@ export const ACCOUNT = '/account';
 export const PASSWORD_FORGET = '/pw-forget';
 export const ADMIN = '/admin';
 export const ADMIN_DETAILS = '/admin/:id';
+export const ENTRY_FORM = '/entryform/';
+export const ENTRY_FORM_BY_USER_TYPE = '/entryform/:usertype';
