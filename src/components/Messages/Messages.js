@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
-import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import MessageList from './MessageList';
 
@@ -11,37 +12,42 @@ class Messages extends Component {
     this.state = {
       text: '',
       loading: false,
-      messages: [],
-      limit: 5,
     };
   }
 
+  componentDidUpdate(props) {
+    if (props.limit !== this.props.limit) {
+      this.onListenForMessages();
+    }
+  }
+
   componentDidMount() {
+    if (!this.props.messages.length) {
+      this.setState({ loading: true });
+    }
+
     this.onListenForMessages();
   }
 
   onListenForMessages = () => {
-    this.setState({ loading: true });
-
     this.unsubscribe = this.props.firebase
       .messages()
       .orderBy('createdAt', 'desc')
-      .limit(this.state.limit)
+      .limit(this.props.limit)
       .onSnapshot(snapshot => {
-        if (snapshot.size) {
-          let messages = [];
-          snapshot.forEach(doc =>
-            messages.push({ ...doc.data(), uid: doc.id }),
-          );
+        // if (snapshot.size) {
+        //   let messages = [];
+        //   snapshot.forEach(doc =>
+        //     messages.push({ ...doc.data(), uid: doc.id }),
+        //   );
+        this.props.onSetMessages(snapshot.data());
 
-          this.setState({
-            messages: messages.reverse(),
-            loading: false,
-          });
-        } else {
-          this.setState({ messages: null, loading: false });
-        }
+        this.setState({
+          // messages: messages.reverse(),
+          loading: false,
+        });
       });
+
   };
 
   componentWillUnmount() {
@@ -79,14 +85,12 @@ class Messages extends Component {
   };
 
   onNextPage = () => {
-    this.setState(
-      state => ({ limit: state.limit + 5 }),
-      this.onListenForMessages,
-    );
+    this.props.onSetMessagesLimit(this.props.limit + 5);
   };
 
   render() {
-    const { text, messages, loading } = this.state;
+    const { messages } = this.props;
+    const { text, loading } = this.state;
 
     return (
       <AuthUserContext.Consumer>
@@ -113,7 +117,7 @@ class Messages extends Component {
 
             <form
               onSubmit={event =>
-                this.onCreateMessage(event, authUser)
+                this.onCreateMessage(event, this.props.authUser)
               }
             >
               <input
@@ -130,4 +134,26 @@ class Messages extends Component {
   }
 }
 
-export default withFirebase(Messages);
+const mapStateToProps = state => ({
+  authUser: state.sessionState.authUser,
+  messages: Object.keys(state.messageState.messages || {}).map(
+    key => ({
+      ...state.messageState.messages[key],
+      uid: key,
+    }),
+  ),
+  limit: state.messageState.limit,
+});
+const mapDispatchToProps = dispatch => ({
+  onSetMessages: messages =>
+    dispatch({ type: 'MESSAGES_SET', messages }),
+  onSetMessagesLimit: limit =>
+    dispatch({ type: 'MESSAGES_LIMIT_SET', limit }),
+});
+export default compose(
+  withFirebase,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  ),
+)(Messages);
