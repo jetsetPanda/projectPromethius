@@ -7,7 +7,7 @@ import * as ROLES from '../../constants/roles';
 
 const SignUpPage = () => (
   <div>
-    <h1>SignUp</h1>
+    <h1>Register New User</h1>
     <SignUpForm />
   </div>
 );
@@ -44,6 +44,8 @@ class SignUpFormBase extends Component {
 
     if (isAdmin) {
       roles[ROLES.ADMIN] = ROLES.ADMIN;
+    } else {
+      roles[ROLES.NOTADMIN] = ROLES.NOTADMIN;
     }
 
     this.props.firebase
@@ -59,9 +61,9 @@ class SignUpFormBase extends Component {
           { merge: true },
         );
       })
-      .then(() => {
-        return this.props.firebase.doSendEmailVerification();
-      })
+      // .then(() => {
+      //   return this.props.firebase.doSendEmailVerification();
+      // })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME);
