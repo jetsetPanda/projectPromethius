@@ -1,13 +1,16 @@
 import React from 'react';
 import { compose } from 'recompose';
 
-import { withAuthorization, withEmailVerification } from '../Session';
+import {
+  withAuthorization,
+  // withEmailVerification
+} from '../Session';
 import Messages from '../Messages';
 
 const HomePage = () => (
   <div>
-    <h1>Home Page</h1>
-    <p>The Home Page is accessible by every signed in user.</p>
+    <h1>Messaging</h1>
+    <p>This page demonstrates CRUD functions in Firebase Firestore:</p>
 
     <Messages />
   </div>
@@ -16,6 +19,6 @@ const HomePage = () => (
 const condition = authUser => !!authUser;
 
 export default compose(
-  withEmailVerification,
+  // withEmailVerification,
   withAuthorization(condition),
 )(HomePage);

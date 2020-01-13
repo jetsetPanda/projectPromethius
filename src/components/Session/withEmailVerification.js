@@ -64,4 +64,4 @@ const withEmailVerification = Component => {
   return withFirebase(WithEmailVerification);
 };
 
-export default withEmailVerification;
+// export default withEmailVerification;

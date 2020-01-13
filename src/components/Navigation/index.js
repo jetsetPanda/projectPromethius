@@ -21,10 +21,10 @@ const Navigation = () => (
 const NavigationAuth = ({ authUser }) => (
   <ul>
     <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
+      <Link to={ROUTES.LANDING}>Home</Link>
     </li>
     <li>
-      <Link to={ROUTES.HOME}>Home</Link>
+      <Link to={ROUTES.HOME}>Messaging</Link>
     </li>
     <li>
       <Link to={ROUTES.ACCOUNT}>Account</Link>
@@ -32,6 +32,11 @@ const NavigationAuth = ({ authUser }) => (
     {!!authUser.roles[ROLES.ADMIN] && (
       <li>
         <Link to={ROUTES.ADMIN}>Admin</Link>
+      </li>
+    )}
+    {!!authUser.roles[ROLES.ADMIN] && (
+      <li>
+        <Link to={ROUTES.SIGN_UP}>Register a User</Link>
       </li>
     )}
     <li>
