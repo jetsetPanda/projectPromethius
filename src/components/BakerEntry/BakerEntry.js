@@ -188,7 +188,7 @@ class BakerEntry  extends Component {
             <br/><br/>
             {loading && <div>Loading ... </div>}
             <hr/>
-            <h3>Submitted Inventories:</h3>
+            <h3>IMPLEMENT::: Previously Submitted Inventories for this Branch:</h3>
             {inventories && (
               <BakerList
                 authUser={authUser}
