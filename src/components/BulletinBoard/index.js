@@ -5,12 +5,13 @@ import {
   withAuthorization,
   // withEmailVerification
 } from '../Session';
-import Messages from './';
+import Messages from './Messages';
 
 const BulletinBoard = () => (
   <div>
-    <h1>Bulletin Board </h1>
-    <p>Messages below are dynamically stored in Firebase Firestore:</p>
+    <h1>Jeff Bulletin Board </h1>
+    <h3>Companywide Messaging System</h3>
+    <p>(only you can edit or delete your own messages)</p>
 
     <Messages />
   </div>

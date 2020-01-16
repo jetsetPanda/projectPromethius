@@ -5,6 +5,7 @@ import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
+import * as USERTYPE from '../../constants/usertype';
 
 const Navigation = () => (
   <AuthUserContext.Consumer>
@@ -20,28 +21,33 @@ const Navigation = () => (
 
 const NavigationAuth = ({ authUser }) => (
   <ul>
+    {/*<li>*/}
+    {/*  <Link to={ROUTES.LANDING}>Home</Link>*/}
+    {/*</li>*/}
     <li>
-      <Link to={ROUTES.LANDING}>Home</Link>
+      <Link to={ROUTES.BULLETIN_BOARD}>Bulletin Board</Link>
     </li>
-    <li>
-      <Link to={ROUTES.HOME}>Messaging</Link>
-    </li>
-    <li>
-      <Link to={ROUTES.ACCOUNT}>Account</Link>
-    </li>
+    {!!authUser.userType[USERTYPE.OWNER] && (
+      <li>
+        <Link to={ROUTES.REPORTS}>Reports</Link>
+      </li>
+    )}
     <li>
       <Link to={ROUTES.ENTRY_FORM}>Enter Inventory</Link>
     </li>
     {!!authUser.roles[ROLES.ADMIN] && (
       <li>
-        <Link to={ROUTES.ADMIN}>Admin</Link>
+        <Link to={ROUTES.ADMIN}>Admin: User List</Link>
       </li>
     )}
     {!!authUser.roles[ROLES.ADMIN] && (
       <li>
-        <Link to={ROUTES.SIGN_UP}>Register a User</Link>
+        <Link to={ROUTES.SIGN_UP}>Admin: Register New User</Link>
       </li>
     )}
+    <li>
+      <Link to={ROUTES.ACCOUNT}>My Account</Link>
+    </li>
     <li>
       <SignOutButton />
     </li>
@@ -51,11 +57,11 @@ const NavigationAuth = ({ authUser }) => (
 const NavigationNonAuth = () => (
   <ul>
     <li>
-      <Link to={ROUTES.LANDING}>Landing</Link>
+      <Link to={ROUTES.LANDING}>Sign In</Link>
     </li>
-    <li>
-      <Link to={ROUTES.SIGN_IN}>Sign In</Link>
-    </li>
+    {/*<li>*/}
+    {/*  <Link to={ROUTES.SIGN_IN}>Sign In</Link>*/}
+    {/*</li>*/}
   </ul>
 );
 

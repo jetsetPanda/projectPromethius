@@ -1,10 +1,10 @@
 export const
-  BAKER = 'BAKER',
-  CASHIER = 'CASHIER',
-  SPOTTER = 'SPOTTER',
-  WAREHOUSE = 'WAREHOUSE',
-  BRANCH_MGR = 'BRANCH_MANAGER',
-  DISTRICT_MGR = 'DISTRICT_MANAGER',
+  BAKER = 'Baker',
+  CASHIER = 'Cashier',
+  SPOTTER = 'Spotter',
+  WAREHOUSE = 'Warehouse',
+  BRANCH_MGR = 'Branch Manager',
+  DISTRICT_MGR = 'District Manager',
   FRANCHISEE = 'FRANCHISEE',
-  ACCOUNTING = 'ACCOUNTING',
-  OWNER = 'OWNER';
+  ACCOUNTING = 'Accounting',
+  OWNER = 'Owner';

@@ -5,6 +5,7 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
 import * as USERTYPE from '../../constants/usertype';
+import * as BRANCH from '../../constants/branches';
 
 const SignUpPage = () => (
   <div>
@@ -20,7 +21,9 @@ const INITIAL_STATE = {
   passwordTwo: '',
   isAdmin: false,
   error: null,
-  userType: '',
+  userType: {},
+  branchLocation: {},
+
 };
 
 const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
@@ -41,7 +44,7 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, isAdmin } = this.state;
+    const { username, email, passwordOne, isAdmin, userType, branchLocation } = this.state;
     const roles = {};
 
     if (isAdmin) {
@@ -59,6 +62,8 @@ class SignUpFormBase extends Component {
             username,
             email,
             roles,
+            userType,
+            branchLocation,
           },
           { merge: true },
         );
@@ -68,7 +73,7 @@ class SignUpFormBase extends Component {
       // })
       .then(() => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME);
+        this.props.history.push(ROUTES.BULLETIN_BOARD);
       })
       .catch(error => {
         if (error.code === ERROR_CODE_ACCOUNT_EXISTS) {
@@ -83,6 +88,10 @@ class SignUpFormBase extends Component {
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  onChangeDropdown = event => {
+    this.setState({ [event.target.name]: {[event.target.value] : event.target.value}});
   };
 
   onChangeCheckbox = event => {
@@ -112,8 +121,9 @@ class SignUpFormBase extends Component {
           value={username}
           onChange={this.onChange}
           type="text"
-          placeholder="Full Name"
+          placeholder="Username"
         />
+        <br/>
         <input
           name="email"
           value={email}
@@ -121,6 +131,7 @@ class SignUpFormBase extends Component {
           type="text"
           placeholder="Email Address"
         />
+        <br/>
         <input
           name="passwordOne"
           value={passwordOne}
@@ -128,6 +139,7 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Password"
         />
+        <br/>
         <input
           name="passwordTwo"
           value={passwordTwo}
@@ -135,8 +147,39 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Confirm Password"
         />
+        <br/><br/>
         <label>
-          Admin:
+          User Type:
+          <select
+            name="userType"
+            onChange={this.onChangeDropdown}>
+            <option value={USERTYPE.BAKER}>{USERTYPE.BAKER}</option>
+            <option value={USERTYPE.SPOTTER}>{USERTYPE.SPOTTER}</option>
+            <option value={USERTYPE.WAREHOUSE}>{USERTYPE.WAREHOUSE}</option>
+            <option value={USERTYPE.BRANCH_MGR}>{USERTYPE.BRANCH_MGR}</option>
+            <option value={USERTYPE.DISTRICT_MGR}>{USERTYPE.DISTRICT_MGR}</option>
+            <option value={USERTYPE.ACCOUNTING}>{USERTYPE.ACCOUNTING}</option>
+            <option value={USERTYPE.OWNER}>{USERTYPE.OWNER}</option>
+          </select>
+        </label>
+        <br/><br/>
+        <label>
+          Branch:
+          <select
+            name="branchLocation"
+            onChange={this.onChangeDropdown}>
+            <option value ={BRANCH.BRANCH_BUTUAN_PALENGKE}>{BRANCH.BRANCH_BUTUAN_PALENGKE}</option>
+            <option value ={BRANCH.BRANCH_BUTUAN_ROBINSONS}>{BRANCH.BRANCH_BUTUAN_ROBINSONS}</option>
+            <option value ={BRANCH.BRANCH_BUTUAN_ESTACIO}>{BRANCH.BRANCH_BUTUAN_ESTACIO}</option>
+            <option value ={BRANCH.BRANCH_CAGAYAN_GAISANO}>{BRANCH.BRANCH_CAGAYAN_GAISANO}</option>
+            <option value ={BRANCH.BRANCH_DAVAO_SM_LANANG}>{BRANCH.BRANCH_DAVAO_SM_LANANG}</option>
+            <option value ={BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}>{BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}</option>
+          </select>
+        </label>
+        <br/>
+        <br/>
+        <label>
+          Give {[ROLES.ADMIN]} Access?
           <input
             name="isAdmin"
             type="checkbox"
@@ -144,6 +187,7 @@ class SignUpFormBase extends Component {
             onChange={this.onChangeCheckbox}
           />
         </label>
+        <br/><br/>
         <button disabled={isInvalid} type="submit">
           Sign Up
         </button>

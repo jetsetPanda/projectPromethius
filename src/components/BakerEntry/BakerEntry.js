@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
-import MessageList from '../Messages/MessageList';
+import MessageList from '../BulletinBoard/MessageList';
 import BakerList from './BakerList';
 import * as PRODUCT from '../../constants/products';
 

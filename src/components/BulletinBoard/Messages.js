@@ -56,6 +56,8 @@ class Messages extends Component {
     this.props.firebase.messages().add({
       text: this.state.text,
       userId: authUser.uid,
+      username: authUser.username,
+      email: authUser.email,
       createdAt: this.props.firebase.fieldValue.serverTimestamp(),
     });
 
@@ -92,11 +94,6 @@ class Messages extends Component {
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
-            {!loading && messages && (
-              <button type="button" onClick={this.onNextPage}>
-                More
-              </button>
-            )}
 
             {loading && <div>Loading ...</div>}
 
@@ -110,6 +107,14 @@ class Messages extends Component {
             )}
 
             {!messages && <div>There are no messages ...</div>}
+            {!loading && messages && (
+              <span>
+                <button type="button" onClick={this.onNextPage}>
+                  Load More Messages...
+                </button>
+                <br/><br/>
+              </span>
+            )}
 
             <form
               onSubmit={event =>
@@ -120,9 +125,12 @@ class Messages extends Component {
                 type="text"
                 value={text}
                 onChange={this.onChangeText}
+                placeholder="Enter a Message"
               />
-              <button type="submit">Send</button>
+              <button type="submit">Send Companywide Message</button>
             </form>
+
+
           </div>
         )}
       </AuthUserContext.Consumer>
