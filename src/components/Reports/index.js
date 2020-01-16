@@ -5,14 +5,14 @@ import {
   withAuthorization,
   // withEmailVerification
 } from '../Session';
-import Messages from '../Messages';
+import Dashboard from './dashboard';
 
-const HomePage = () => (
+const Reports = () => (
   <div>
-    <h1>Messaging</h1>
-    <p>This page demonstrates CRUD functions in Firebase Firestore:</p>
+    <h1>Report Dashboard</h1>
+    <p>To Do: Branch Reporting</p>
 
-    <Messages />
+    <Dashboard />
   </div>
 );
 
@@ -21,4 +21,4 @@ const condition = authUser => !!authUser;
 export default compose(
   // withEmailVerification,
   withAuthorization(condition),
-)(HomePage);
+)(Reports);
