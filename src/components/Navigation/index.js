@@ -27,10 +27,10 @@ const NavigationAuth = ({ authUser }) => (
     <li>
       <Link to={ROUTES.BULLETIN_BOARD}>Bulletin Board</Link>
     </li>
-    {!!authUser.userType[USERTYPE.OWNER] && (
-      <li>
-        <Link to={ROUTES.REPORTS}>Reports</Link>
-      </li>
+    {!!authUser.roles[USERTYPE.OWNER] && (
+    <li>
+      <Link to={ROUTES.REPORTS}>Reports</Link>
+    </li>
     )}
     <li>
       <Link to={ROUTES.ENTRY_FORM}>Enter Inventory</Link>

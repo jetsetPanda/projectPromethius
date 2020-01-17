@@ -21,9 +21,9 @@ const INITIAL_STATE = {
   passwordTwo: '',
   isAdmin: false,
   error: null,
-  userType: {},
-  branchLocation: {},
-
+  userType: '',
+  branchLocation: '',
+  roles : {},
 };
 
 const ERROR_CODE_ACCOUNT_EXISTS = 'auth/email-already-in-use';
@@ -44,14 +44,16 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, isAdmin, userType, branchLocation } = this.state;
-    const roles = {};
+    const { username, email, passwordOne, isAdmin, userType, branchLocation, roles } = this.state;
 
     if (isAdmin) {
       roles[ROLES.ADMIN] = ROLES.ADMIN;
     } else {
       roles[ROLES.NOTADMIN] = ROLES.NOTADMIN;
     }
+
+    roles[userType] = userType;
+    roles[branchLocation] = branchLocation;
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -91,7 +93,12 @@ class SignUpFormBase extends Component {
   };
 
   onChangeDropdown = event => {
-    this.setState({ [event.target.name]: {[event.target.value] : event.target.value}});
+    // this.setState({
+    //   roles: {[event.target.value] : event.target.value},
+    //   [event.target.name]: event.target.value,
+    // });
+    this.setState({ [event.target.name]: event.target.value });
+
   };
 
   onChangeCheckbox = event => {
@@ -174,6 +181,10 @@ class SignUpFormBase extends Component {
             <option value ={BRANCH.BRANCH_CAGAYAN_GAISANO}>{BRANCH.BRANCH_CAGAYAN_GAISANO}</option>
             <option value ={BRANCH.BRANCH_DAVAO_SM_LANANG}>{BRANCH.BRANCH_DAVAO_SM_LANANG}</option>
             <option value ={BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}>{BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}</option>
+            <option value ={BRANCH.BRANCH_ACCOUNTING_OFFICE}>{BRANCH.BRANCH_ACCOUNTING_OFFICE}</option>
+            <option value ={BRANCH.BRANCH_MAIN_OFFICE}>{BRANCH.BRANCH_MAIN_OFFICE}</option>
+
+
           </select>
         </label>
         <br/>
