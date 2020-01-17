@@ -20,6 +20,7 @@ const INITIAL_STATE = {
   passwordOne: '',
   passwordTwo: '',
   isAdmin: false,
+  isInventory: false,
   error: null,
   userType: '',
   branchLocation: '',
@@ -44,12 +45,18 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-    const { username, email, passwordOne, isAdmin, userType, branchLocation, roles } = this.state;
+    const { username, email, passwordOne, isAdmin, isInventory, userType, branchLocation, roles } = this.state;
 
     if (isAdmin) {
       roles[ROLES.ADMIN] = ROLES.ADMIN;
     } else {
       roles[ROLES.NOTADMIN] = ROLES.NOTADMIN;
+    }
+
+    if (isInventory) {
+      roles[ROLES.CAN_INVENTORY] = ROLES.CAN_INVENTORY;
+    } else {
+      roles[ROLES.CANNOT_INVENTORY] = ROLES.CANNOT_INVENTORY;
     }
 
     roles[userType] = userType;
@@ -112,6 +119,9 @@ class SignUpFormBase extends Component {
       passwordOne,
       passwordTwo,
       isAdmin,
+      isInventory,
+      userType,
+      branchLocation,
       error,
     } = this.state;
 
@@ -175,15 +185,14 @@ class SignUpFormBase extends Component {
           <select
             name="branchLocation"
             onChange={this.onChangeDropdown}>
-            <option value ={BRANCH.BRANCH_BUTUAN_PALENGKE}>{BRANCH.BRANCH_BUTUAN_PALENGKE}</option>
-            <option value ={BRANCH.BRANCH_BUTUAN_ROBINSONS}>{BRANCH.BRANCH_BUTUAN_ROBINSONS}</option>
-            <option value ={BRANCH.BRANCH_BUTUAN_ESTACIO}>{BRANCH.BRANCH_BUTUAN_ESTACIO}</option>
-            <option value ={BRANCH.BRANCH_CAGAYAN_GAISANO}>{BRANCH.BRANCH_CAGAYAN_GAISANO}</option>
-            <option value ={BRANCH.BRANCH_DAVAO_SM_LANANG}>{BRANCH.BRANCH_DAVAO_SM_LANANG}</option>
-            <option value ={BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}>{BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}</option>
-            <option value ={BRANCH.BRANCH_ACCOUNTING_OFFICE}>{BRANCH.BRANCH_ACCOUNTING_OFFICE}</option>
-            <option value ={BRANCH.BRANCH_MAIN_OFFICE}>{BRANCH.BRANCH_MAIN_OFFICE}</option>
-
+            <option value={BRANCH.BRANCH_BUTUAN_PALENGKE}>{BRANCH.BRANCH_BUTUAN_PALENGKE}</option>
+            <option value={BRANCH.BRANCH_BUTUAN_ROBINSONS}>{BRANCH.BRANCH_BUTUAN_ROBINSONS}</option>
+            <option value={BRANCH.BRANCH_BUTUAN_ESTACIO}>{BRANCH.BRANCH_BUTUAN_ESTACIO}</option>
+            <option value={BRANCH.BRANCH_CAGAYAN_GAISANO}>{BRANCH.BRANCH_CAGAYAN_GAISANO}</option>
+            <option value={BRANCH.BRANCH_DAVAO_SM_LANANG}>{BRANCH.BRANCH_DAVAO_SM_LANANG}</option>
+            <option value={BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}>{BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}</option>
+            <option value={BRANCH.BRANCH_ACCOUNTING_OFFICE}>{BRANCH.BRANCH_ACCOUNTING_OFFICE}</option>
+            <option value={BRANCH.BRANCH_MAIN_OFFICE}>{BRANCH.BRANCH_MAIN_OFFICE}</option>
 
           </select>
         </label>
@@ -195,6 +204,16 @@ class SignUpFormBase extends Component {
             name="isAdmin"
             type="checkbox"
             checked={isAdmin}
+            onChange={this.onChangeCheckbox}
+          />
+        </label>
+        <br/>
+        <label>
+          Can User Enter Inventory?
+          <input
+            name="isInventory"
+            type="checkbox"
+            checked={isInventory}
             onChange={this.onChangeCheckbox}
           />
         </label>
