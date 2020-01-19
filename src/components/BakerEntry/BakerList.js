@@ -1,5 +1,5 @@
 import React from 'react';
-import { moment, unix } from 'moment';
+import Moment from 'react-moment';
 
 const BakerList = ({
    authUser,
@@ -9,13 +9,38 @@ const BakerList = ({
     {inventories.map(inventory => (
 
       <li>
-        <h5>User Name: {authUser.username}</h5>
-        <h5>Product Name: {inventory.recipeName}</h5>
-        <p>Eggs: {inventory.eggs} Pieces</p>
-        <p>Flour: {inventory.flour} Sacks</p>
-        <p>Sugar: {inventory.sugar} Kilos</p>
-        <h6>Submitted on: {inventory.createdAt.seconds}</h6>
-        <h6>UserID: {inventory.userId} </h6>
+        <span>
+          <h4>Submitted On:<br/>
+            <Moment unix local format="MM/DD/YYYY">
+               {inventory.createdAt.seconds}
+            </Moment>
+          </h4>
+          <h5>By User: <strong>{inventory.createdBy}</strong>
+            <br/>
+            Designation: {inventory.userType}
+            <br/>
+            Branch: {inventory.branchLocation}
+            <br/>
+            on: {inventory.createdAt.seconds}
+            <br/>
+            UserID: {inventory.userId}
+          </h5>
+        </span>
+
+
+
+        <h4>Product Display Name: {inventory.productName} </h4>
+        <h5>Product Code: {inventory.productCode}</h5>
+        <h4>
+          Eggs: {inventory.eggs} Pieces
+          <br/>
+          Flour: {inventory.flour} Sacks
+          <br/>
+          Sugar: {inventory.sugar} Kilos
+          <br/>
+          Product Yield/Produced: {inventory.productYield}
+        </h4>
+        <br/><br/>
       </li>
     ))}
   </ul>

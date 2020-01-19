@@ -49,12 +49,15 @@ class UserList extends Component {
             <li key={user.uid}>
               <span>
                 <strong>ID:</strong> {user.uid}
+                <br/>
               </span>
               <span>
                 <strong>E-Mail:</strong> {user.email}
+                <br/>
               </span>
               <span>
                 <strong>Username:</strong> {user.username}
+                <br/>
               </span>
               <span>
                 <Link
@@ -65,6 +68,7 @@ class UserList extends Component {
                 >
                   Details
                 </Link>
+                <br/><br/>
               </span>
             </li>
           ))}
