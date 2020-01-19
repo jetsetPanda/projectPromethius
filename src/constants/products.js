@@ -1,4 +1,4 @@
 export const
-  ENSAYMADA = 'Ensaymada',
-  PANDESAL = 'Pan de Sal',
-  JELLYROLL = 'Jelly Roll';
+  ENSAYMADA = 'ensaymada',
+  PANDESAL = 'pan de sal',
+  JELLYROLL = 'jelly roll';
