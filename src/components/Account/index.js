@@ -33,8 +33,15 @@ const AccountPage = () => (
   <AuthUserContext.Consumer>
     {authUser => (
       <div>
-        <h1>Account: {authUser.email}</h1>
+        <h2>My Account:</h2>
+        <h3>
+          Username: {authUser.username}
+          <br/>
+          Email: {authUser.email}
+        </h3>
+        <p>Reset Password:</p>
         <PasswordForgetForm />
+        <p>Change Password:</p>
         <PasswordChangeForm />
         <LoginManagement authUser={authUser} />
       </div>
@@ -96,6 +103,7 @@ class LoginManagementBase extends Component {
 
     return (
       <div>
+        <br/>
         Sign In Methods:
         <ul>
           {SIGN_IN_METHODS.map(signInMethod => {
