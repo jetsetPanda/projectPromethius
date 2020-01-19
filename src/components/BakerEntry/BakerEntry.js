@@ -5,12 +5,13 @@ import { withFirebase } from '../Firebase';
 import BakerList from './BakerList';
 import { PRODUCTS } from '../../constants/products';
 
-class BakerEntry  extends Component {
+import { Button } from '@material-ui/core';
+
+class BakerEntry extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      text: '',
       loading: false,
       inventories: [],
       limit: 5,
@@ -19,7 +20,7 @@ class BakerEntry  extends Component {
       eggs: null,
       recipeName: null,
       productYield: null,
-
+      code: null
     };
   }
 
@@ -68,10 +69,12 @@ class BakerEntry  extends Component {
 
   onChangeIngredient = event => {
     this.setState({ [event.target.name]: event.target.value });
+    console.log("ingredient changed", this.state);
   };
 
   onChangeRadio = event => {
     this.setState({ [event.target.name]: event.target.value });
+    console.log("product changed", this.state);
   };
 
   render() {
@@ -82,7 +85,7 @@ class BakerEntry  extends Component {
       eggs,
       productYield,
       inventories,
-      text, loading
+      loading
     } = this.state;
 
     const canSubmit =
@@ -111,7 +114,7 @@ class BakerEntry  extends Component {
               {PRODUCTS.map(product => (
                 <>
                   <input
-                    name={product.code}
+                    name='recipeName'
                     id={product.code}
                     type='radio'
                     value={product.code}
@@ -128,7 +131,7 @@ class BakerEntry  extends Component {
               <label><h4>Ingredients Used: </h4></label>
 
               {PRODUCTS[0].ingredientChoices.map(ingredient => (
-                <>
+                <div>
 
                   <label htmlFor={ingredient.code}>{ingredient.displayName} </label>
                   <input
@@ -140,7 +143,7 @@ class BakerEntry  extends Component {
                   />
                   <br/>
 
-                </>
+                </div>
               ))}
 
               <br/>
@@ -159,7 +162,13 @@ class BakerEntry  extends Component {
 
               <hr/>
               <br/>
-              <button disabled={canSubmit} type="submit">Submit Inventory</button>
+              <button
+                // variant="contained"
+                disabled={canSubmit}
+                type="submit"
+              >
+                Submit Inventory
+              </button>
             </form>
 
             <br/><br/>
@@ -175,18 +184,6 @@ class BakerEntry  extends Component {
 
             {!inventories && <div>There are no submitted inventories ...</div>}
 
-            {/*<form*/}
-            {/*  onSubmit={event =>*/}
-            {/*    this.onCreateMessage(event, authUser)*/}
-            {/*  }*/}
-            {/*>*/}
-            {/*  <input*/}
-            {/*    type="text"*/}
-            {/*    value={text}*/}
-            {/*    onChange={this.onChangeText}*/}
-            {/*  />*/}
-            {/*  <button type="submit">Send</button>*/}
-            {/*</form>*/}
           </div>
         )}
       </AuthUserContext.Consumer>
