@@ -20,7 +20,7 @@ class BakerEntry extends Component {
       eggs: null,
       recipeName: null,
       productYield: null,
-      code: null
+      productCode: null
     };
   }
 
@@ -58,11 +58,16 @@ class BakerEntry extends Component {
 
   onCreateInventory = (event, authUser) => {
     this.props.firebase.inventories().add({
-      recipeName: this.state.recipeName,
+      productName: this.state.recipeName,
+      productCode: this.state.productCode,
       sugar: this.state.sugar,
       flour: this.state.flour,
       eggs: this.state.eggs,
+      productYield: this.state.productYield,
       userId: authUser.uid,
+      createdBy: authUser.username,
+      userType: authUser.userType,
+      branchLocation: authUser.branchLocation,
       createdAt: this.props.firebase.fieldValue.serverTimestamp(),
     })
   };
@@ -73,7 +78,10 @@ class BakerEntry extends Component {
   };
 
   onChangeRadio = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({
+      [event.target.name]: event.target.value,
+      productCode: event.target.id,
+    });
     console.log("product changed", this.state);
   };
 
@@ -117,10 +125,12 @@ class BakerEntry extends Component {
                     name='recipeName'
                     id={product.code}
                     type='radio'
-                    value={product.code}
+                    value={product.displayName}
                     onChange={this.onChangeRadio}
                   />
-                  <label htmlFor={product.code}> {product.displayName}</label>
+                  <label
+                    htmlFor={product.code}>
+                    {product.displayName}</label>
                   <br/>
                 </>
               ))}

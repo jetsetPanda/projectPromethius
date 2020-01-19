@@ -20,7 +20,7 @@ export const
 
 export const PRODUCTS = [
   {
-    code: 'ensaymada',
+    code: 'bread_ensaymada',
     displayName: 'Ensaymada',
     inputLabel: '',
     ingredientChoices: [
@@ -42,7 +42,7 @@ export const PRODUCTS = [
     ]
   },
   {
-    code: 'pandesal',
+    code: 'bread_pandesal',
     displayName: 'Pan de Sal',
     inputLabel: '',
     ingredientChoices: [
@@ -64,7 +64,7 @@ export const PRODUCTS = [
     ]
   },
   {
-    code: 'jellyroll',
+    code: 'cake_jellyroll',
     displayName: 'Jelly Roll',
     inputLabel: '',
     ingredientChoices: [

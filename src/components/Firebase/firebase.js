@@ -70,7 +70,7 @@ class Firebase {
           .get()
           .then(snapshot => {
             const dbUser = snapshot.data();
-
+            console.log("dbUser", dbUser);
             // default empty roles
             if (!dbUser.roles) {
               dbUser.roles = {};
@@ -84,7 +84,7 @@ class Firebase {
               // providerData: authUser.providerData,
               ...dbUser,
             };
-
+            console.log("authUser is: ", authUser);
             next(authUser);
           });
       } else {
