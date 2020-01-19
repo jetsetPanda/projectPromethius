@@ -26,7 +26,7 @@ export const USERTYPES = [
   },
   {
     code : 'FRANCHISEE',
-    displayName: 'FRANCHISEE'
+    displayName: 'Franchisee'
   },
   {
     code : 'ACCOUNTING',

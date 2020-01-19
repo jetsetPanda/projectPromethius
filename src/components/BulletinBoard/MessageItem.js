@@ -46,9 +46,9 @@ class MessageItem extends Component {
             <span>
               <em>From: <strong>{message.username}</strong> </em><br/>
               <em>Sent on: </em>
-              <Moment unix local format="ddd MM/DD/YYYY hh:mm ">
-                {message.createdAt.seconds}
-              </Moment>
+                <Moment unix local format="ddd MM/DD/YYYY hh:mm ">
+                  {message.createdAt.seconds}
+                </Moment>
               {/*<p>{message.userId}</p>*/}
               <br/>
               <p>{message.text}</p>
