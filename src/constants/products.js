@@ -36,7 +36,7 @@ export const PRODUCTS = [
       },
       {
         code: 'flour',
-        displayName: 'flour',
+        displayName: 'Flour',
         placeholderCopy: 'sacks of flour',
       },
     ]

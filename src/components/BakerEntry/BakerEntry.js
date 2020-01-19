@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
-import MessageList from '../BulletinBoard/MessageList';
 import BakerList from './BakerList';
-// import * as PRODUCT from '../../constants/products';
 import { PRODUCTS } from '../../constants/products';
-import { USERTYPES } from '../../constants/usertype';
 
 class BakerEntry  extends Component {
   constructor(props) {
@@ -15,7 +12,6 @@ class BakerEntry  extends Component {
     this.state = {
       text: '',
       loading: false,
-      messages: [],
       inventories: [],
       limit: 5,
       sugar: null,
@@ -59,18 +55,6 @@ class BakerEntry  extends Component {
     this.unsubscribe();
   }
 
-  onChangeText = event => {
-    this.setState({ text: event.target.value });
-  };
-
-
-  onNextPage = () => {
-    this.setState(
-      state => ({ limit: state.limit + 5 }),
-      this.onListenForMessages,
-    );
-  };
-
   onCreateInventory = (event, authUser) => {
     this.props.firebase.inventories().add({
       recipeName: this.state.recipeName,
@@ -98,7 +82,7 @@ class BakerEntry  extends Component {
       eggs,
       productYield,
       inventories,
-      text, loading, messages,
+      text, loading
     } = this.state;
 
     const canSubmit =
@@ -120,6 +104,8 @@ class BakerEntry  extends Component {
               }
             >
 
+              <hr/>
+
               <label><h4>Select Product to Inventory: </h4></label>
 
               {PRODUCTS.map(product => (
@@ -136,37 +122,29 @@ class BakerEntry  extends Component {
                 </>
               ))}
 
+              <br/>
+              <hr/>
 
               <label><h4>Ingredients Used: </h4></label>
 
-              <label htmlFor="sugar">Sugar: </label>
-              <input
-                name='sugar'
-                id='sugar'
-                onChange={this.onChangeIngredient}
-                type="number"
-                placeholder='amount of sugar (in kilos)'
-              />
-              <br/>
-              <label htmlFor="eggs">Eggs: </label>
-              <input
-                name='eggs'
-                id='eggs'
-                onChange={this.onChangeIngredient}
-                type="number"
-                placeholder='number of eggs (per egg)'
-              />
-              <br/>
-              <label htmlFor="flour">Flour: </label>
-              <input
-                name='flour'
-                id='flour'
-                onChange={this.onChangeIngredient}
-                type="number"
-                placeholder='sacks of flour'
-              />
+              {PRODUCTS[0].ingredientChoices.map(ingredient => (
+                <>
 
-              <br/><br/>
+                  <label htmlFor={ingredient.code}>{ingredient.displayName} </label>
+                  <input
+                    name={ingredient.code}
+                    id={ingredient.code}
+                    onChange={this.onChangeIngredient}
+                    type={ingredient.code}
+                    placeholder={ingredient.placeholderCopy}
+                  />
+                  <br/>
+
+                </>
+              ))}
+
+              <br/>
+              <hr/>
 
               <label><h4>Product Yield: </h4></label>
               <label htmlFor="productYield">Yield: </label>
@@ -177,11 +155,10 @@ class BakerEntry  extends Component {
                 type="number"
                 placeholder='amount of product made'
               />
-              <br/>
-
-
-
               <br/><br/>
+
+              <hr/>
+              <br/>
               <button disabled={canSubmit} type="submit">Submit Inventory</button>
             </form>
 
