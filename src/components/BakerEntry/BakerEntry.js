@@ -4,8 +4,9 @@ import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
 import MessageList from '../BulletinBoard/MessageList';
 import BakerList from './BakerList';
-import * as PRODUCT from '../../constants/products';
-
+// import * as PRODUCT from '../../constants/products';
+import { PRODUCTS } from '../../constants/products';
+import { USERTYPES } from '../../constants/usertype';
 
 class BakerEntry  extends Component {
   constructor(props) {
@@ -17,10 +18,12 @@ class BakerEntry  extends Component {
       messages: [],
       inventories: [],
       limit: 5,
-      sugar: 0,
-      flour: 0,
-      eggs: 0,
-      recipeName: '',
+      sugar: null,
+      flour: null,
+      eggs: null,
+      recipeName: null,
+      productYield: null,
+
     };
   }
 
@@ -80,8 +83,12 @@ class BakerEntry  extends Component {
   };
 
   onChangeIngredient = event => {
-  this.setState({ [event.target.name]: event.target.value });
-};
+    this.setState({ [event.target.name]: event.target.value });
+  };
+
+  onChangeRadio = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
 
   render() {
     const {
@@ -89,65 +96,56 @@ class BakerEntry  extends Component {
       sugar,
       flour,
       eggs,
+      productYield,
       inventories,
       text, loading, messages,
     } = this.state;
 
     const canSubmit =
-      recipeName === '' ||
-      sugar === 0 ||
-      flour === 0 ||
-      eggs === 0;
-
+      recipeName === null ||
+      sugar === null ||
+      flour === null ||
+      eggs === null ||
+      productYield === null;
 
     return (
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
-          <h2>UserType: Baker (TODO: implement userType)</h2>
+          <h2>UserType: (TODO: implement userType)</h2>
 
             <form
               onSubmit={event =>
                 this.onCreateInventory(event, authUser)
               }
             >
-              <label><h4>Select Product: </h4></label>
-              <input
-                name='recipeName'
-                id='ensaymada'
-                type='radio'
-                value={PRODUCT.ENSAYMADA}
-                onChange={this.onChangeRadio}
-              />
-              <label htmlFor="ensaymada">Ensaymada</label>
-              <br/>
-              <input
-                name='recipeName'
-                id='pandesal'
-                type='radio'
-                value={PRODUCT.PANDESAL}
-                onChange={this.onChangeIngredient}
-              />
-              <label htmlFor="jellyroll">Pan de Sal</label>
-              <br/>
-              <input
-                name='recipeName'
-                id='jellyroll'
-                type='radio'
-                value={PRODUCT.JELLYROLL}
-                onChange={this.onChangeIngredient}
-              />
-              <label htmlFor="jellyroll">Jelly Roll</label>
-              <br/><br/>
+
+              <label><h4>Select Product to Inventory: </h4></label>
+
+              {PRODUCTS.map(product => (
+                <>
+                  <input
+                    name={product.code}
+                    id={product.code}
+                    type='radio'
+                    value={product.code}
+                    onChange={this.onChangeRadio}
+                  />
+                  <label htmlFor={product.code}> {product.displayName}</label>
+                  <br/>
+                </>
+              ))}
+
 
               <label><h4>Ingredients Used: </h4></label>
+
               <label htmlFor="sugar">Sugar: </label>
               <input
                 name='sugar'
                 id='sugar'
                 onChange={this.onChangeIngredient}
                 type="number"
-                // placeholder='amount of sugar (in kilos)'
+                placeholder='amount of sugar (in kilos)'
               />
               <br/>
               <label htmlFor="eggs">Eggs: </label>
@@ -156,7 +154,7 @@ class BakerEntry  extends Component {
                 id='eggs'
                 onChange={this.onChangeIngredient}
                 type="number"
-                // placeholder='number of eggs (per egg)'
+                placeholder='number of eggs (per egg)'
               />
               <br/>
               <label htmlFor="flour">Flour: </label>
@@ -165,26 +163,28 @@ class BakerEntry  extends Component {
                 id='flour'
                 onChange={this.onChangeIngredient}
                 type="number"
-                // placeholder='sacks of flour'
+                placeholder='sacks of flour'
               />
+
+              <br/><br/>
+
+              <label><h4>Product Yield: </h4></label>
+              <label htmlFor="productYield">Yield: </label>
+              <input
+                name='productYield'
+                id='productYield'
+                onChange={this.onChangeIngredient}
+                type="number"
+                placeholder='amount of product made'
+              />
+              <br/>
+
+
 
               <br/><br/>
               <button disabled={canSubmit} type="submit">Submit Inventory</button>
             </form>
 
-
-
-            {/*OG CODE BELOW*/}
-            {/**************************************************/}
-            {/**************************************************/}
-            {/**************************************************/}
-            {/**************************************************/}
-            {/**************************************************/}
-            {/*{!loading && messages && (*/}
-            {/*  <button type="button" onClick={this.onNextPage}>*/}
-            {/*    More*/}
-            {/*  </button>*/}
-            {/*)}*/}
             <br/><br/>
             {loading && <div>Loading ... </div>}
             <hr/>

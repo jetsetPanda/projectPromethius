@@ -5,7 +5,7 @@ import { AuthUserContext } from '../Session';
 import SignOutButton from '../SignOut';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
-import * as USERTYPE from '../../constants/usertype';
+import { USERTYPES } from '../../constants/usertype';
 
 const Navigation = () => (
   <AuthUserContext.Consumer>
@@ -27,11 +27,11 @@ const NavigationAuth = ({ authUser }) => (
     <li>
       <Link to={ROUTES.BULLETIN_BOARD}>Bulletin Board</Link>
     </li>
-    {!!authUser.roles[USERTYPE.OWNER] && (
-    <li>
-      <Link to={ROUTES.REPORTS}>Reports</Link>
-    </li>
-    )}
+    {/*{!!authUser.roles[USERTYPE.OWNER] && (*/}
+    {/*<li>*/}
+    {/*  <Link to={ROUTES.REPORTS}>Reports</Link>*/}
+    {/*</li>*/}
+    {/*)}*/}
     <li>
       <Link to={ROUTES.ENTRY_FORM}>Enter Inventory</Link>
     </li>

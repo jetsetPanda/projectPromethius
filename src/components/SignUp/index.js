@@ -4,8 +4,9 @@ import { Link, withRouter } from 'react-router-dom';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import * as ROLES from '../../constants/roles';
-import * as USERTYPE from '../../constants/usertype';
-import * as BRANCH from '../../constants/branches';
+import { USERTYPES } from '../../constants/usertype';
+import { BRANCHES } from '../../constants/branches';
+import { PRODUCTS } from '../../constants/products';
 
 const SignUpPage = () => (
   <div>
@@ -15,6 +16,7 @@ const SignUpPage = () => (
 );
 
 const INITIAL_STATE = {
+  branchlist : '',
   username: '',
   email: '',
   passwordOne: '',
@@ -170,13 +172,11 @@ class SignUpFormBase extends Component {
           <select
             name="userType"
             onChange={this.onChangeDropdown}>
-            <option value={USERTYPE.BAKER}>{USERTYPE.BAKER}</option>
-            <option value={USERTYPE.SPOTTER}>{USERTYPE.SPOTTER}</option>
-            <option value={USERTYPE.WAREHOUSE}>{USERTYPE.WAREHOUSE}</option>
-            <option value={USERTYPE.BRANCH_MGR}>{USERTYPE.BRANCH_MGR}</option>
-            <option value={USERTYPE.DISTRICT_MGR}>{USERTYPE.DISTRICT_MGR}</option>
-            <option value={USERTYPE.ACCOUNTING}>{USERTYPE.ACCOUNTING}</option>
-            <option value={USERTYPE.OWNER}>{USERTYPE.OWNER}</option>
+
+            {USERTYPES.map(usertype => (
+              <option value={usertype.code}>{usertype.displayName}</option>
+            ))}
+
           </select>
         </label>
         <br/><br/>
@@ -185,14 +185,19 @@ class SignUpFormBase extends Component {
           <select
             name="branchLocation"
             onChange={this.onChangeDropdown}>
-            <option value={BRANCH.BRANCH_BUTUAN_PALENGKE}>{BRANCH.BRANCH_BUTUAN_PALENGKE}</option>
-            <option value={BRANCH.BRANCH_BUTUAN_ROBINSONS}>{BRANCH.BRANCH_BUTUAN_ROBINSONS}</option>
-            <option value={BRANCH.BRANCH_BUTUAN_ESTACIO}>{BRANCH.BRANCH_BUTUAN_ESTACIO}</option>
-            <option value={BRANCH.BRANCH_CAGAYAN_GAISANO}>{BRANCH.BRANCH_CAGAYAN_GAISANO}</option>
-            <option value={BRANCH.BRANCH_DAVAO_SM_LANANG}>{BRANCH.BRANCH_DAVAO_SM_LANANG}</option>
-            <option value={BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}>{BRANCH.BRANCH_DUBAI_BURJ_KHALIFA}</option>
-            <option value={BRANCH.BRANCH_ACCOUNTING_OFFICE}>{BRANCH.BRANCH_ACCOUNTING_OFFICE}</option>
-            <option value={BRANCH.BRANCH_MAIN_OFFICE}>{BRANCH.BRANCH_MAIN_OFFICE}</option>
+
+            {BRANCHES.map(branch => (
+              <option value={branch.code}>{branch.displayName}</option>
+            ))}
+
+            {/*<option value={BRANCHES.BRANCH_BUTUAN_PALENGKE.code}>{BRANCHES.BRANCH_BUTUAN_PALENGKE.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_BUTUAN_ROBINSONS.code}>{BRANCHES.BRANCH_BUTUAN_ROBINSONS.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_BUTUAN_ESTACIO.code}>{BRANCHES.BRANCH_BUTUAN_ESTACIO.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_CAGAYAN_GAISANO.code}>{BRANCHES.BRANCH_CAGAYAN_GAISANO.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_DAVAO_SMLANANG.code}>{BRANCHES.BRANCH_DAVAO_SMLANANG.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_DUBAI_BURJ.code}>{BRANCHES.BRANCH_DUBAI_BURJ.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_HQ_MAINOFFICE.code}>{BRANCHES.BRANCH_HQ_MAINOFFICE.displayName}</option>*/}
+            {/*<option value={BRANCHES.BRANCH_HQ_ACCOUNTINGOFFICE.code}>{BRANCHES.BRANCH_HQ_ACCOUNTINGOFFICE.displayName}</option>*/}
 
           </select>
         </label>
