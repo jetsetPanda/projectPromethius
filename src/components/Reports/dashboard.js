@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 
 import { AuthUserContext } from '../Session';
 import { withFirebase } from '../Firebase';
-import MessageList from '../BulletinBoard/MessageList';
 import BakerList from '../BakerEntry/BakerList';
-import * as PRODUCT from '../../constants/products';
-
 
 class Dashboard  extends Component {
   constructor(props) {
@@ -55,33 +52,33 @@ class Dashboard  extends Component {
   componentWillUnmount() {
     this.unsubscribe();
   }
-
-  onChangeText = event => {
-    this.setState({ text: event.target.value });
-  };
-
-
-  onNextPage = () => {
-    this.setState(
-      state => ({ limit: state.limit + 5 }),
-      this.onListenForMessages,
-    );
-  };
-
-  onCreateInventory = (event, authUser) => {
-    this.props.firebase.inventories().add({
-      recipeName: this.state.recipeName,
-      sugar: this.state.sugar,
-      flour: this.state.flour,
-      eggs: this.state.eggs,
-      userId: authUser.uid,
-      createdAt: this.props.firebase.fieldValue.serverTimestamp(),
-    })
-  };
-
-  onChangeIngredient = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  //
+  // onChangeText = event => {
+  //   this.setState({ text: event.target.value });
+  // };
+  //
+  //
+  // onNextPage = () => {
+  //   this.setState(
+  //     state => ({ limit: state.limit + 5 }),
+  //     this.onListenForMessages,
+  //   );
+  // };
+  //
+  // onCreateInventory = (event, authUser) => {
+  //   this.props.firebase.inventories().add({
+  //     recipeName: this.state.recipeName,
+  //     sugar: this.state.sugar,
+  //     flour: this.state.flour,
+  //     eggs: this.state.eggs,
+  //     userId: authUser.uid,
+  //     createdAt: this.props.firebase.fieldValue.serverTimestamp(),
+  //   })
+  // };
+  //
+  // onChangeIngredient = event => {
+  //   this.setState({ [event.target.name]: event.target.value });
+  // };
 
   render() {
     const {
@@ -104,12 +101,6 @@ class Dashboard  extends Component {
       <AuthUserContext.Consumer>
         {authUser => (
           <div>
-            <h3>Username: {authUser.username}</h3>
-            <h3>Branch: </h3>
-
-            <br/><br/>
-            {loading && <div>Loading ... </div>}
-            <hr/>
             <h3>Submitted Inventories:</h3>
 
             {inventories && (
@@ -119,6 +110,7 @@ class Dashboard  extends Component {
               />
             )}
 
+            {loading && <div>Loading ... </div>}
             {!inventories && <div>There are no submitted inventories ...</div>}
 
           </div>

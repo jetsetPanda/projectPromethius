@@ -11,7 +11,8 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import EntryForm from '../EntryForm';
 import Reports from '../Reports';
-
+import Dashboard from '../Reports/dashboard';
+import RecipeList from '../Reports/RecipeList';
 
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
@@ -34,6 +35,8 @@ const App = () => (
       <Route path={ROUTES.REPORTS} component={Reports} />
       <Route path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route path={ROUTES.ADMIN} component={AdminPage} />
+      {/*<Route path={ROUTES.SUBMITTED_INVENTORIES} component={Dashboard} />*/}
+      {/*<Route path={ROUTES.MASTER_RECIPES} component={RecipeList} />*/}
       <Route path={ROUTES.ENTRY_FORM} component={EntryForm}/>
     </div>
   </Router>

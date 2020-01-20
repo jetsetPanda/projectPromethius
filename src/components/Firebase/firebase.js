@@ -110,7 +110,11 @@ class Firebase {
 
   inventories = () => this.db.collection('inventory');
 
+  // *** RecipeMaster API ***
 
+  recipe = uid => this.db.doc(`recipeMaster/${uid}`);
+
+  recipes = () => this.db.collection(`recipeMaster`);
 }
 
 export default Firebase;

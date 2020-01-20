@@ -28,26 +28,26 @@ const NavigationAuth = ({ authUser }) => (
       <Link to={ROUTES.BULLETIN_BOARD}>Bulletin Board</Link>
     </li>
     {/*{!!authUser.roles[USERTYPE.OWNER] && (*/}
-    {/*<li>*/}
-    {/*  <Link to={ROUTES.REPORTS}>Reports</Link>*/}
-    {/*</li>*/}
+    <li>
+      <Link to={ROUTES.REPORTS}>Reports</Link>
+    </li>
     {/*)}*/}
     <li>
       <Link to={ROUTES.ENTRY_FORM}>Enter Inventory</Link>
     </li>
-    {!!authUser.roles[ROLES.ADMIN] && (
-      <li>
-        <Link to={ROUTES.ADMIN}>Admin: User List</Link>
-      </li>
-    )}
-    {!!authUser.roles[ROLES.ADMIN] && (
-      <li>
-        <Link to={ROUTES.SIGN_UP}>Admin: Register New User</Link>
-      </li>
-    )}
-    <li>
-      <Link to={ROUTES.ACCOUNT}>My Account</Link>
-    </li>
+    {/*{!!authUser.roles[ROLES.ADMIN] && (*/}
+    {/*  <li>*/}
+    {/*    <Link to={ROUTES.ADMIN}>Admin: User List</Link>*/}
+    {/*  </li>*/}
+    {/*)}*/}
+    {/*{!!authUser.roles[ROLES.ADMIN] && (*/}
+    {/*  <li>*/}
+    {/*    <Link to={ROUTES.SIGN_UP}>Admin: Register New User</Link>*/}
+    {/*  </li>*/}
+    {/*)}*/}
+    {/*<li>*/}
+    {/*  <Link to={ROUTES.ACCOUNT}>My Account</Link>*/}
+    {/*</li>*/}
     <li>
       <SignOutButton />
     </li>
