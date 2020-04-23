@@ -10,3 +10,5 @@ export const ADMIN = '/admin';
 export const ADMIN_DETAILS = '/admin/:id';
 export const ENTRY_FORM = '/entryform/';
 export const ENTRY_FORM_BY_USER_TYPE = '/entryform/:usertype';
+export const SUBMITTED_INVENTORIES = '/reports/submitted';
+export const MASTER_RECIPES = '/reports/recipes';
